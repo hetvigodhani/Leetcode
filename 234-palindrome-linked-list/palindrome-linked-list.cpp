@@ -11,41 +11,40 @@
 class Solution {
 public:
     bool isPalindrome(ListNode* head) {
-       if (head == nullptr || head->next == nullptr)
-            return true; // empty list or single element is considered palindrome
 
-        ListNode* slow = head;
-        ListNode* fast = head;
-        
-        // Finding the middle of the linked list
-        while (fast != nullptr && fast->next != nullptr) {
-            slow = slow->next;
-            fast = fast->next->next;
+        //one node in linkedlist
+        if(head->next==NULL || head==NULL)  return true;
+
+        //finding mid
+        ListNode * slow=head;
+        ListNode * fast=head;
+        while(fast!=NULL && fast->next!=NULL)
+        {
+            slow=slow->next;
+            fast=fast->next->next;
         }
 
-        // Reversing the second half of the linked list
-        ListNode* prev = nullptr;
-        ListNode* curr = slow;
-        ListNode* next = nullptr;
-        
-        while (curr != nullptr) {
-            next = curr->next;
-            curr->next = prev;
-            prev = curr;
-            curr = next;
+        //reverse right of mid
+        ListNode * pre=NULL;
+        ListNode * curr=slow;
+        ListNode * nex=NULL;
+        while(curr!=NULL)
+        {
+            nex=curr->next;
+            curr->next=pre;
+            pre=curr;
+            curr=nex;
         }
 
-        // Comparing the first half with the reversed second half
-        ListNode* first = head;
-        ListNode* second = prev;
-
-        while (second != nullptr) {
-            if (first->val != second->val)
-                return false;
-            first = first->next;
-            second = second->next;
+        //check pal.
+        ListNode * first=head;
+        ListNode * second=pre;
+        while(second!=NULL)
+        {
+            if(first->val!=second->val) return false;
+            first=first->next;
+            second=second->next;
         }
-
         return true;
     }
 };
